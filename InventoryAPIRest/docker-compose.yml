@@ -1,0 +1,26 @@
+services:
+  api:
+    image: mi-api-net10
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "7013:7013"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Inventory12345Pass
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P 'Inventory12345Pass' -Q 'SELECT 1' -C"]
+      interval: 10s
+      timeout: 5s
+      retries: 5

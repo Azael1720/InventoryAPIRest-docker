@@ -1,0 +1,8 @@
+@InventoryAPIRest_HostAddress = http://localhost:5028
+
+GET {{InventoryAPIRest_HostAddress}}/api/products
+Accept: application/json
+
+
+GET{{InventoryAPIRest_HostAddress}}/api/categories
+Accept: application/json
