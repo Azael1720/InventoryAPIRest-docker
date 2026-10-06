@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace InventoryApiRest.Tests
+namespace InventoryApiRest.Tests.Controllers
 {
     public class ProductsControllerTests
     {

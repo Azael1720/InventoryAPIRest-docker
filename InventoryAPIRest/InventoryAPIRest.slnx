@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="../InventoryApiRest.Tests/InventoryApiRest.Tests.csproj" Id="d04b56db-52a6-4ea2-80b9-2717f9b2ed3b" />
+  <Project Path="../InventoryAPIRest.Web/InventoryAPIRest.Web.csproj" Id="96bb63f4-52fe-468b-b0c4-182f48ffe457" />
   <Project Path="InventoryAPIRest.csproj" />
 </Solution>

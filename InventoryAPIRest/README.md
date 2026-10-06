@@ -1,4 +1,4 @@
-# 🚀 API Rest con .NET 10 y Docker
+# API Rest con .NET 10 y Docker
 
 Este repositorio contiene una **API Rest desarrollada en .NET 10** completamente dockerizada, la cual se conecta de manera automatizada a una base de datos **SQL Server**.
 
@@ -6,7 +6,7 @@ El proyecto está diseñado bajo una arquitectura de contenedores que automatiza
 
 ---
 
-## 🛠️ Requisitos Previos
+## Requisitos Previos
 
 Antes de desplegar la aplicación, asegúrate de tener instalado en tu equipo:
 *   [Docker Desktop](https://docker.com) (con el motor WSL2 activo si usas Windows).

@@ -1,0 +1,55 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Categorías";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 mb-0">Categorías</h1>
+    <a class="btn btn-primary" asp-page="Create">Nueva categoría</a>
+</div>
+
+@if (Model.LoadError is not null)
+{
+    <div class="alert alert-danger d-flex justify-content-between align-items-center" role="alert">
+        <span>@Model.LoadError</span>
+        <a class="btn btn-sm btn-outline-danger" asp-page="Index">Reintentar</a>
+    </div>
+}
+else if (Model.Categories.Count == 0)
+{
+    <div class="text-center text-muted border rounded py-5">
+        <p class="mb-2">Aún no hay categorías registradas.</p>
+        <a asp-page="Create">Crear la primera</a>
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th class="text-end">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var category in Model.Categories)
+                {
+                    <tr>
+                        <td>@category.Name</td>
+                        <td class="text-muted">@category.Description</td>
+                        <td class="text-end text-nowrap">
+                            <a class="btn btn-sm btn-outline-secondary" asp-page="Edit" asp-route-id="@category.Id">Editar</a>
+                            <form method="post" asp-page="Index" asp-page-handler="Delete" asp-route-id="@category.Id" class="d-inline"
+                                  onsubmit="return confirm('¿Eliminar la categoría @category.Name?');" data-loading>
+                                <button type="submit" class="btn btn-sm btn-outline-danger" data-loading-text="Eliminando...">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

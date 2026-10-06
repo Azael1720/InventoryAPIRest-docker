@@ -1,0 +1,40 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+<div class="text-center mb-4">
+    <h1 class="display-6">Inventario</h1>
+    <p class="text-muted">Administra productos, categorías y movimientos de stock.</p>
+</div>
+
+<div class="row g-3">
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h2 class="h5">Productos</h2>
+                <p class="text-muted">Consulta, crea y edita productos, y revisa su stock.</p>
+                <a class="btn btn-primary" asp-page="/Products/Index">Ir a productos</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h2 class="h5">Categorías</h2>
+                <p class="text-muted">Organiza los productos por categoría.</p>
+                <a class="btn btn-primary" asp-page="/Categories/Index">Ir a categorías</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h2 class="h5">Movimientos</h2>
+                <p class="text-muted">Registra entradas, salidas y ventas, y consulta el historial.</p>
+                <a class="btn btn-primary" asp-page="/Movements/Index">Ir a movimientos</a>
+            </div>
+        </div>
+    </div>
+</div>

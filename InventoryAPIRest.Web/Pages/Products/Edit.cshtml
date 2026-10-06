@@ -1,0 +1,76 @@
+﻿@page "{id:int}"
+@model EditModel
+@{
+    ViewData["Title"] = "Editar producto";
+}
+
+<h1 class="h3 mb-3">Editar producto</h1>
+
+@if (Model.Categories.Count == 0)
+{
+    <div class="alert alert-warning" role="alert">
+        No hay categorías disponibles. <a asp-page="/Categories/Create">Crea una categoría</a> primero.
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-7">
+        <form method="post" asp-page="Edit" asp-route-id="@Model.Id" data-loading>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Form.Code" class="form-label"></label>
+                    <input asp-for="Form.Code" class="form-control" maxlength="50" />
+                    <span asp-validation-for="Form.Code" class="text-danger"></span>
+                </div>
+                <div class="col-md-8 mb-3">
+                    <label asp-for="Form.Name" class="form-label"></label>
+                    <input asp-for="Form.Name" class="form-control" maxlength="150" />
+                    <span asp-validation-for="Form.Name" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Form.Description" class="form-label"></label>
+                <textarea asp-for="Form.Description" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Form.Description" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Form.Price" class="form-label"></label>
+                    <input asp-for="Form.Price" class="form-control" type="number" step="0.01" min="0.01" />
+                    <span asp-validation-for="Form.Price" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Form.CategoryId" class="form-label"></label>
+                    <select asp-for="Form.CategoryId" asp-items="Model.Categories" class="form-select">
+                        <option value="">Selecciona una categoría...</option>
+                    </select>
+                    <span asp-validation-for="Form.CategoryId" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Stock actual</label>
+                <input class="form-control" value="@Model.Form.Stock" disabled />
+                <input type="hidden" asp-for="Form.Stock" />
+                <div class="form-text">
+                    El stock solo cambia mediante movimientos.
+                    <a asp-page="/Movements/Register" asp-route-productId="@Model.Id">Registrar un movimiento</a>
+                </div>
+            </div>
+
+            <div class="form-check mb-3">
+                <input asp-for="Form.IsActive" class="form-check-input" />
+                <label asp-for="Form.IsActive" class="form-check-label"></label>
+            </div>
+
+            <button type="submit" class="btn btn-primary" data-loading-text="Guardando...">Guardar cambios</button>
+            <a asp-page="Index" class="btn btn-outline-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
