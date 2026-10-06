@@ -1,4 +1,5 @@
-﻿using InventoryAPIRest.Models.Enums;
+﻿using InventoryAPIRest.Exceptions;
+using InventoryAPIRest.Models.Enums;
 
 namespace InventoryAPIRest.Models
 {
@@ -20,7 +21,7 @@ namespace InventoryAPIRest.Models
         public InventoryMovement ApplyMovement(MovementType type, int quantity, string? reason)
         {
             if (type == MovementType.Sale && !IsActive)
-                throw new InvalidOperationException("No se puede vender un producto inactivo.");
+                throw new InactiveProductException(Id);
 
             var stockBefore = Stock;
             var stockAfter = type == MovementType.StockIn
@@ -28,8 +29,7 @@ namespace InventoryAPIRest.Models
                 : stockBefore - quantity;
 
             if (stockAfter < 0)
-                throw new InvalidOperationException(
-                    $"Stock insuficiente. Disponible: {stockBefore}, solicitado: {quantity}.");
+                throw new InsufficientStockException(stockBefore, quantity);
 
             var now = DateTime.UtcNow;
             Stock = stockAfter;

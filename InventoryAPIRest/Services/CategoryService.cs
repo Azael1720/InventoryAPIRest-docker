@@ -1,4 +1,5 @@
 ﻿using InventoryAPIRest.DTOs;
+using InventoryAPIRest.Exceptions;
 using InventoryAPIRest.Models;
 using InventoryAPIRest.Repositories.Interfaces;
 using InventoryAPIRest.Services.Interfaces;
@@ -47,7 +48,7 @@ namespace InventoryAPIRest.Services
             if (category is null) return false;
 
             if (await _repository.HasProductsAsync(id))
-                throw new InvalidOperationException("No se puede eliminar una categoría que tiene productos asociados.");
+                throw new CategoryHasProductsException(id);
 
             await _repository.DeleteAsync(category);
             return true;

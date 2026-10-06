@@ -1,5 +1,6 @@
 ﻿using InventoryAPIRest.Abstractions;
 using InventoryAPIRest.DTOs;
+using InventoryAPIRest.Exceptions;
 using InventoryAPIRest.Models.Enums;
 
 namespace InventoryAPIRest.Features.Inventory
@@ -13,7 +14,7 @@ namespace InventoryAPIRest.Features.Inventory
             int productId, MovementType type, StockOperationDto dto)
         {
             var product = await _products.GetByIdAsync(productId)
-                ?? throw new KeyNotFoundException($"El producto con Id {productId} no existe.");
+                ?? throw new ProductNotFoundException(productId);
             var movement = product.ApplyMovement(type, dto.Quantity, dto.Reason);
 
             await _products.RegisterMovementAsync(product, movement);

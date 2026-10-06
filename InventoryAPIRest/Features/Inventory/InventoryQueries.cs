@@ -1,6 +1,7 @@
 ﻿using InventoryAPIRest.Abstractions;
 using InventoryAPIRest.Data;
 using InventoryAPIRest.DTOs;
+using InventoryAPIRest.Exceptions;
 using InventoryAPIRest.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -66,7 +67,7 @@ namespace InventoryAPIRest.Features.Inventory
         public async Task<IEnumerable<InventoryMovementDto>> HandleAsync(GetMovementsByProductQuery query)
         {
             if (!await _context.Products.AnyAsync(p => p.Id == query.ProductId))
-                throw new KeyNotFoundException($"El producto con Id {query.ProductId} no existe.");
+                throw new ProductNotFoundException(query.ProductId);
 
             return await _context.InventoryMovements
                 .AsNoTracking()

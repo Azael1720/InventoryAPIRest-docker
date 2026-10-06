@@ -1,5 +1,6 @@
 ﻿using InventoryAPIRest.Abstractions;
 using InventoryAPIRest.Data;
+using InventoryAPIRest.Exceptions;
 using InventoryAPIRest.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,8 +24,7 @@ namespace InventoryAPIRest.Infrastructure.Persistence
                     .SetProperty(p => p.UpdatedAt, product.UpdatedAt));
 
             if (rows == 0)
-                throw new InvalidOperationException(
-                    "El stock cambió mientras se procesaba la operación. Intenta de nuevo más tarde.");
+                throw new StockConcurrencyException(product.Id);
 
             _context.Entry(product).State = EntityState.Unchanged;
             _context.InventoryMovements.Add(movement);

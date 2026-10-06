@@ -1,4 +1,5 @@
 ﻿using InventoryAPIRest.DTOs;
+using InventoryAPIRest.Exceptions;
 using InventoryAPIRest.Models;
 using InventoryAPIRest.Models.Enums;
 using InventoryAPIRest.Repositories.Interfaces;
@@ -28,10 +29,10 @@ namespace InventoryAPIRest.Services
         public async Task<ProductDto> CreateAsync(CreateProductDto dto)
         {
             if (!await _categoryRepository.ExistsAsync(dto.CategoryId))
-                throw new KeyNotFoundException($"La categoría con Id {dto.CategoryId} no existe.");
+                throw new CategoryNotFoundException(dto.CategoryId);
 
             if (await _productRepository.CodeExistsAsync(dto.Code))
-                throw new InvalidOperationException($"Ya existe un producto con el código '{dto.Code}'.");
+                throw new DuplicateProductCodeException(dto.Code);
 
             var product = new Product
             {
@@ -67,10 +68,10 @@ namespace InventoryAPIRest.Services
             if (product is null) return false;
 
             if (!await _categoryRepository.ExistsAsync(dto.CategoryId))
-                throw new KeyNotFoundException($"La categoría con Id {dto.CategoryId} no existe.");
+                throw new CategoryNotFoundException(dto.CategoryId);
 
             if (await _productRepository.CodeExistsAsync(dto.Code, id))
-                throw new InvalidOperationException($"Ya existe otro producto con el código '{dto.Code}'.");
+                throw new DuplicateProductCodeException(dto.Code);
 
             product.Name = dto.Name;
             product.Code = dto.Code;

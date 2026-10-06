@@ -25,7 +25,7 @@ namespace InventoryAPIRest.Repositories
         {
             _context.Products.Update(product);
             await _context.SaveChangesAsync();
-        }
+        }   
         public async Task DeleteAsync(Product product)
         {
             _context.Products.Remove(product);
